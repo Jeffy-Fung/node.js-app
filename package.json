@@ -4,7 +4,7 @@
   "description": "A simple node.js  and express.js project folder structure for easy and faster setup. Written in Javascript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devStart": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
