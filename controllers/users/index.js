@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 const User = require("../../models/User");
 
 exports.getUsers = async (req, res) => {
@@ -11,19 +11,60 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
     const user = await User.create(req.body);
-    res.status(201).json(user);
+    return res.status(201).json({ data: user });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
-exports.validateCreateUser = () => {
-  body("username").exists().withMessage("Username is required");
-  body("password").exists().withMessage("Username is required");
-  body("email").withMessage("Email should be a valid email address").optional().isEmail();
-  body("phone").withMessage("Phone should be a number").optional().isNumeric();
-  body("firstName").withMessage("First name should be a string").optional().isString();
-  body("lastName").withMessage("Last name should be a string").optional().isString();
+exports.createUserValidationSchema = {
+  username: {
+    in: ["body"],
+    errorMessage: "Username is required",
+    exists: true,
+  },
+  password: {
+    in: ["body"],
+    errorMessage: "Password is required",
+    exists: true,
+    isLength: {
+      errorMessage: "Password should be at least 8 chars long",
+      options: { min: 8 },
+    },
+  },
+  email: {
+    in: ["body"],
+    optional: true,
+    isEmail: {
+      errorMessage: "Invalid email",
+    },
+  },
+  phone: {
+    in: ["body"],
+    optional: true,
+    isMobilePhone: {
+      errorMessage: "Invalid phone number",
+    },
+  },
+  first_name: {
+    in: ["body"],
+    optional: true,
+    isAlpha: {
+      errorMessage: "First name should contain only letters",
+    },
+  },
+  last_name: {
+    in: ["body"],
+    optional: true,
+    isAlpha: {
+      errorMessage: "Last name should contain only letters",
+    },
+  },
 };
