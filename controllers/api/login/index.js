@@ -17,4 +17,5 @@ exports.googleAuth = passport.authenticate("google", {
 })
 
 exports.googleAuthRedirect = async (req, res) => {
+  // TODO: sign a jwt token
 };
