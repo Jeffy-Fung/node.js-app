@@ -10,4 +10,6 @@ LoginRouter.get("/", getLogins);
 LoginRouter.get("/auth/google", googleAuth);
 LoginRouter.get("/auth/google/redirect", googleAuth, googleAuthRedirect);
 
+// TODO: logout endpoint
+
 module.exports = LoginRouter;

@@ -1,3 +1,5 @@
+// TODO?: Split this file into multiple files for each strategy
+
 const User = require("../../models/User");
 const passport = require("passport");
 
@@ -22,9 +24,10 @@ passport.use(
 
       if (!User.findOne({ googleId: profile.id })) {
         try {
+          // TODO: encapsulate create User as a module
           await User.create({
             username: profile.displayName,
-            password: generatePassword(profile.displayName),
+            password: generateRandomPassword(profile.displayName),
             email: profile.emails[0].value,
             googleId: profile.id,
           });
@@ -54,7 +57,8 @@ passport.use(
   )
 );
 
-function generatePassword(username) {
+// TODO: encapsulate this function in somewhere else
+function generateRandomPassword(username) {
   const randomNumbers = Math.floor(10000000 + Math.random() * 90000000);
   return `${username}_${randomNumbers}`;
 }

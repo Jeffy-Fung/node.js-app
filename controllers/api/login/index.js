@@ -11,11 +11,14 @@ exports.getLogins = (req, res) => {
   }
 };
 
+// TODO: encapsulate googleAuth as a auth provider service?
+// TODO: distinguish between request for token and request for exchanging user data with token
 exports.googleAuth = passport.authenticate("google", {
   scope: ["profile", "email"],
 });
 
 exports.googleAuthRedirect = (req, res) => {
+  // TODO: encapsulate sign jwt token as a function / service
   const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
