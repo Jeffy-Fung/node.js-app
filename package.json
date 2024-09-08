@@ -18,6 +18,8 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^8.5.1",
     "nodemailer": "^6.9.4",
+    "passport": "^0.7.0",
+    "passport-google-oauth": "^2.0.0",
     "paystack": "^2.0.1",
     "stripe": "^12.14.0"
   },
