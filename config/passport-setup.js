@@ -17,6 +17,7 @@ passport.use(
         try {
           await User.create({
             username: profile.displayName,
+            password: generatePassword(profile.displayName),
             email: profile.emails[0].value,
             googleId: profile.id,
           });
@@ -28,3 +29,8 @@ passport.use(
     }
   )
 );
+
+function generatePassword(username) {
+  const randomNumbers = Math.floor(10000000 + Math.random() * 90000000);
+  return `${username}_${randomNumbers}`;
+}
