@@ -1,5 +1,6 @@
+const passport = require('passport');
+
 exports.getLogins = async (req, res) => {
-  console.log('getLogins');
   try {
     res.status(200).json({
       data: [
@@ -9,4 +10,11 @@ exports.getLogins = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+exports.googleAuth = passport.authenticate("google", {
+  scope: ["profile", "email"],
+})
+
+exports.googleAuthRedirect = async (req, res) => {
 };
