@@ -1,6 +1,13 @@
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../../models/User");
+const passport = require("passport");
+
+// For Google Strategy
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+// For JWT Strategy
+const passportJWT = require("passport-jwt");
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 passport.use(
   new GoogleStrategy(
@@ -25,6 +32,23 @@ passport.use(
         } catch (error) {
           return done(error, null);
         }
+      }
+    }
+  )
+);
+
+passport.use(
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.JWT_SECRET,
+    },
+    async (jwtPayload, done) => {
+      try {
+        const user = await User.findOneById(jwtPayload.id);
+        return done(null, user);
+      } catch (error) {
+        return done(error);
       }
     }
   )
