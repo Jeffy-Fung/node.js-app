@@ -8,6 +8,6 @@ const LoginRouter = require("express").Router();
 
 LoginRouter.get("/", getLogins);
 LoginRouter.get("/auth/google", googleAuth);
-LoginRouter.get("/auth/google/redirect", googleAuthRedirect);
+LoginRouter.get("/auth/google/redirect", googleAuth, googleAuthRedirect);
 
 module.exports = LoginRouter;
