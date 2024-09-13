@@ -1,6 +1,6 @@
 // TODO?: Split this file into multiple files for each strategy
 
-const User = require("../../models/User");
+const User = require("../models/User");
 const passport = require("passport");
 
 // For Google Strategy
