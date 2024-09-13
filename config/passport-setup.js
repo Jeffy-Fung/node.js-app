@@ -22,7 +22,9 @@ passport.use(
       console.log("accessToken:", accessToken);
       console.log("refreshToken:", refreshToken);
 
-      if (!User.findOne({ googleId: profile.id })) {
+      const user = await User.findOne({ googleId: profile.id });
+
+      if (!user) {
         try {
           // TODO: encapsulate create User as a module
           await User.create({
@@ -31,10 +33,12 @@ passport.use(
             email: profile.emails[0].value,
             googleId: profile.id,
           });
-          return done(null, profile);
+          return done(null, user);
         } catch (error) {
           return done(error, null);
         }
+      } else {
+        return done(null, user);
       }
     }
   )
