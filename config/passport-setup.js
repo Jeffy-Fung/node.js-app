@@ -29,7 +29,7 @@ passport.use(
           // TODO: encapsulate create User as a module
           await User.create({
             username: profile.displayName,
-            password: generateRandomPassword(profile.displayName),
+            password: generateRandomPassword(profile.displayName),  // TODO: replace display name with other name
             email: profile.emails[0].value,
             googleId: profile.id,
           });
@@ -44,6 +44,14 @@ passport.use(
   )
 );
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 passport.use(
   new JWTStrategy(
     {
@@ -52,7 +60,7 @@ passport.use(
     },
     async (jwtPayload, done) => {
       try {
-        const user = await User.findOneById(jwtPayload.id);
+        const user = await User.findById(jwtPayload.id);
         return done(null, user);
       } catch (error) {
         return done(error);
