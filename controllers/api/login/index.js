@@ -19,6 +19,7 @@ exports.googleAuth = passport.authenticate("google", {
 
 exports.googleAuthRedirect = (req, res) => {
   // TODO: encapsulate sign jwt token as a function / service
+  console.log("redirect success: ", req.user);
   const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
@@ -26,5 +27,5 @@ exports.googleAuthRedirect = (req, res) => {
   res.setHeader("Authorization", `Bearer ${token}`);
 
   // TODO: Redirect to the frontend URL
-  return res.redirect("");
+  return res.redirect("http://localhost:3000");
 };
