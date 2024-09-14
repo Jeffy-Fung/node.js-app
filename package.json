@@ -11,7 +11,8 @@
     "@root": ".",
     "@models": "./models",
     "@routes": "./routes",
-    "@controllers": "./controllers"
+    "@controllers": "./controllers",
+    "@modules": "./modules"
   },
   "keywords": [],
   "author": "",

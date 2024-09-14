@@ -8,6 +8,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 // For JWT Strategy
 const passportJWT = require("passport-jwt");
+const { createAccountFromGoogle } = require("@modules/createUser");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
@@ -26,14 +27,13 @@ passport.use(
 
       if (!user) {
         try {
-          // TODO: encapsulate create User as a module
-          await User.create({
-            username: profile.displayName,
-            password: generateRandomPassword(profile.displayName),  // TODO: replace display name with other name
+          const newUser = await createAccountFromGoogle({
+            username: getUsernameFromGoogleDisplayname(profile.displayName),
             email: profile.emails[0].value,
             googleId: profile.id,
           });
-          return done(null, user);
+
+          return done(null, newUser);
         } catch (error) {
           return done(error, null);
         }
@@ -61,8 +61,7 @@ passport.use(
   )
 );
 
-// TODO: encapsulate this function in somewhere else
-function generateRandomPassword(username) {
-  const randomNumbers = Math.floor(10000000 + Math.random() * 90000000);
-  return `${username}_${randomNumbers}`;
+function getUsernameFromGoogleDisplayname(displayname) {
+  const username = displayname.trim().split(" ").join("_").toLowerCase();
+  return username;
 }
