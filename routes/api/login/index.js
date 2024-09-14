@@ -1,6 +1,6 @@
+const { googleAuth } = require("../../../authentication");
 const {
   getLogins,
-  googleAuth,
   googleAuthRedirect,
 } = require("../../../controllers/api/login");
 

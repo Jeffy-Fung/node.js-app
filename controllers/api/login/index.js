@@ -11,13 +11,6 @@ exports.getLogins = (req, res) => {
   }
 };
 
-// TODO: encapsulate googleAuth as a auth provider service?
-// TODO: distinguish between request for token and request for exchanging user data with token
-exports.googleAuth = passport.authenticate("google", {
-  scope: ["profile", "email"],
-  session: false,
-});
-
 exports.googleAuthRedirect = (req, res) => {
   // TODO: encapsulate sign jwt token as a function / service
   console.log("redirect success: ", req.user);
