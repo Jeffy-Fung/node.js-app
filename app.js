@@ -7,17 +7,9 @@ const port = process.env.PORT || 3000;
 require("./config/dbConnect");
 require("./config/passport-setup");
 
-const session = require('express-session');
+// TODO: encapsulate passport session middleware
 const passport = require('passport');
-
-app.use(session({
-  secret: process.env.SESSION_SECRET || "keyboard cat",
-  resave: false,
-  saveUninitialized: true,
-}));
-
 app.use(passport.initialize());
-app.use(passport.session());
 
 const RootRouter = require("./routes/index");
 
