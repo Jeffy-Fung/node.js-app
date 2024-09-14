@@ -1,8 +1,8 @@
-const { googleAuth } = require("../../../authentication");
+const { googleAuth } = require("@root/authentication");
 const {
   getLogins,
   googleAuthRedirect,
-} = require("../../../controllers/api/login");
+} = require("@controllers/api/login");
 
 const LoginRouter = require("express").Router();
 
