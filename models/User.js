@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const noSpaces = (value) => {
   if (/\s/.test(value)) {
@@ -35,5 +37,19 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  const user = this;
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified("password")) return next();
+
+  try {
+    const hash = await bcrypt.hash(user.password, saltRounds);
+    user.password = hash;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = mongoose.model("User", userSchema);
