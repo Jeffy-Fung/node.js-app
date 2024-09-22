@@ -9,4 +9,4 @@ RUN npm install
 
 EXPOSE ${PORT}
 
-CMD ["node", "app.js"]
+CMD ["npm", "run", "dev"]
