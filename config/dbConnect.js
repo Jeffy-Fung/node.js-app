@@ -7,6 +7,7 @@ mongoose
   .connect(mongoURI, {
     user: process.env.MONGO_INITDB_ROOT_USERNAME,
     pass: process.env.MONGO_INITDB_ROOT_PASSWORD,
+    dbName: "node-js-app",
   })
   .then(() => {
     console.log("Connected to MongoDB");
