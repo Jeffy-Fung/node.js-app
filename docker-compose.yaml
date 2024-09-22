@@ -1,7 +1,18 @@
-# Use root/example as user/password credentials
-version: '1.0.0'
-
 services:
+  node-js-app:
+    build: .
+    restart: always
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:8.0.0

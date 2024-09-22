@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 const mongoURI = process.env.MONGO_URI;
 
 mongoose
-  .connect(mongoURI, {})
+  .connect(mongoURI, {
+    user: process.env.MONGO_INITDB_ROOT_USERNAME,
+    pass: process.env.MONGO_INITDB_ROOT_PASSWORD,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
