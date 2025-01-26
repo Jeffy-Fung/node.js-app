@@ -8,6 +8,9 @@ const port = process.env.PORT || 3000;
 require("./config/dbConnect");
 require("./config/passport-setup");
 
+const cors = require("cors");
+app.use(cors({ origin: "http://localhost:3001" }));
+
 // TODO: encapsulate passport session middleware
 const passport = require('passport');
 app.use(passport.initialize());
