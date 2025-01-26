@@ -10,6 +10,16 @@ exports.getUsers = async (req, res) => {
   }
 };
 
+exports.getUser = async (req, res) => {
+  try {
+    // TODO: support find by id
+    const user = await User.findById(req.params.id);
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.createUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
