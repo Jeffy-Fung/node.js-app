@@ -1,4 +1,3 @@
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
 exports.getLogins = (req, res) => {
@@ -20,6 +19,5 @@ exports.googleAuthRedirect = (req, res) => {
 
   res.setHeader("Authorization", `Bearer ${token}`);
 
-  // TODO: Redirect to the frontend URL
-  return res.redirect("http://localhost:3000");
+  return res.redirect(`${process.env.FRONTEND_URL}/api/auth/callback`);
 };
