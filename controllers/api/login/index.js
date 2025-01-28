@@ -19,5 +19,5 @@ exports.googleAuthRedirect = (req, res) => {
 
   res.setHeader("Authorization", `Bearer ${token}`);
 
-  return res.redirect(`${process.env.FRONTEND_URL}/api/auth/callback`);
+  return res.redirect(`${process.env.FRONTEND_URL}/api/auth`);
 };
