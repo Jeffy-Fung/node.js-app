@@ -17,7 +17,5 @@ exports.googleAuthRedirect = (req, res) => {
     expiresIn: "1h",
   });
 
-  res.setHeader("Authorization", `Bearer ${token}`);
-
-  return res.redirect(`${process.env.FRONTEND_URL}/api/auth`);
+  return res.redirect(`${process.env.FRONTEND_URL}/api/auth?jwtToken=${token}`);
 };
