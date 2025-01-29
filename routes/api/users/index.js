@@ -12,7 +12,6 @@ const UserRouter = require("express").Router();
 UserRouter.get("/", authentication, getUsers);
 UserRouter.post("/", checkSchema(createUserValidationSchema), createUser);
 
-// TODO: add authentication
-UserRouter.get("/:id", getUser);
+UserRouter.get("/:id", authentication, getUser);
 
 module.exports = UserRouter;

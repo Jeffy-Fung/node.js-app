@@ -12,8 +12,7 @@ exports.getUsers = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    // TODO: support find by id
-    const user = await User.findById(req.params.id);
+    const user = req.user;
     res.status(200).json({ data: user });
   } catch (error) {
     res.status(500).json({ error: error.message });
