@@ -13,6 +13,7 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = req.user;
+    // TODO: Do not return password
     res.status(200).json({ data: user });
   } catch (error) {
     res.status(500).json({ error: error.message });
