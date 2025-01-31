@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema(
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     googleId: { type: String, required: false },
+    chatSessions: [{ type: mongoose.Schema.Types.ObjectId, ref: "ChatSession" }],
   },
   { timestamps: true }
 );
