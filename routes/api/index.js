@@ -6,5 +6,6 @@ APIRouter.get("/", (req, res, next) => {
 
 APIRouter.use("/users", require("./users/index"));
 APIRouter.use("/login", require("./login/index"));
+APIRouter.use("/chat-sessions", require("./chat-sessions/index"));
 
 module.exports = APIRouter;
