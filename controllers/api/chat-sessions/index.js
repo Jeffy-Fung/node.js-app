@@ -1,4 +1,5 @@
 const ChatSession = require("@models/ChatSession");
+const ChatHistory = require("@models/ChatHistory");
 
 exports.getChatSessions = async (req, res) => {
   const user = req.user;
@@ -6,8 +7,8 @@ exports.getChatSessions = async (req, res) => {
   return res.status(200).json({ data: chatSessions });
 };
 
-exports.getChatSession = async (req, res) => {
+exports.getChatHistories = async (req, res) => {
   const targetSessionId = req.params.id;
-  const chatSession = await ChatSession.create({ _id: targetSessionId });
-  return res.status(200).json({ data: chatSession });
+  const chatHistories = await ChatHistory.find({ session: targetSessionId });
+  return res.status(200).json({ data: chatHistories });
 };
