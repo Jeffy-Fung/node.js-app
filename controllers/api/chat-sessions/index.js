@@ -33,7 +33,7 @@ exports.getChatHistories = async (req, res) => {
   return res.status(200).json({
     data: chatHistories.map((chatHistory) => ({
       id: chatHistory._id,
-      role: chatHistory.role === "human" ? "user" : chatHistories.role,
+      role: ChatHistory.convertRole(chatHistory.role),
       message: chatHistory.message,
       createdAt: chatHistory.createdAt,
       updatedAt: chatHistory.updatedAt,

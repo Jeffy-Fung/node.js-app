@@ -9,4 +9,15 @@ const chatHistorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+chatHistorySchema.statics.convertRole = (role) => {
+  switch (role) {
+    case "human":
+      return "user";
+    case "system":
+      return "ai";
+    default:
+      return role;
+  }
+};
+
 module.exports = mongoose.model("ChatHistory", chatHistorySchema);
