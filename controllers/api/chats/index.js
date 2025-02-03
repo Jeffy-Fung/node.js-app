@@ -1,20 +1,33 @@
 const { simpleChat } = require("@services/ai-app");
+const ChatHistory = require("@models/ChatHistory");
 
 exports.createChat = async (req, res) => {
-  const { messages } = req.body;
+  const { messages, sessionId } = req.body;
   const inputUserMessage = messages[0].text;
 
-  console.log(inputUserMessage);
+  // TODO: User data base transation
+  await ChatHistory.create({
+    session: sessionId,
+    role: "human",
+    message: inputUserMessage,
+  });
 
-  // TODO: Append human message to chat history
+  const chatHistories = await ChatHistory.find({ session: sessionId });
 
-  const serializedMessages = [
-    ["human", inputUserMessage],
-  ];
+  const serializedMessages = chatHistories.map((chatHistory) => [
+    chatHistory.role,
+    chatHistory.message,
+  ]);
+
+  console.log(serializedMessages);
 
   const aiMessage = await simpleChat(serializedMessages);
 
-  // TODO: Append ai message to chat history
+  await ChatHistory.create({
+    session: sessionId,
+    role: "system",
+    message: aiMessage,
+  });
 
   return res.status(201).json({ text: aiMessage });
 };
