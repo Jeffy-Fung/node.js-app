@@ -18,3 +18,27 @@ exports.simpleChat = async (messages) => {
     throw error;
   }
 };
+
+exports.crawlNews = async (news_urls) => {
+  const urlParams = news_urls.map(url => `urls=${url}`).join('&');
+
+  try {
+    const response = await fetch(`${process.env.AI_APP_URL}/news-deails?${urlParams}`, {
+      method: "GET",
+    });
+
+    const data = await response.json();
+    return data.map((news) => {
+      return {
+        title: news._title,
+        content: news._text,
+        url: news.url,
+      }
+    });
+
+
+  } catch (error) {
+    console.log("Error during fetch:", error);
+    throw error;
+  }
+};
