@@ -10,7 +10,7 @@ exports.fetchLatestNews = async () => {
     if (data.status !== "ok") throw new Error("Failed to fetch news");
 
     return data.articles.filter(
-      (article) => article.source.id === "cnn" || article.source.name === "CNBC"
+      (article) => crawlableSourceNames.includes(article.source.name)
     );
 
   } catch (error) {
@@ -18,3 +18,5 @@ exports.fetchLatestNews = async () => {
     throw error;
   }
 };
+
+const crawlableSourceNames = ["CNBC", "CNN", "Interview", "BBC News"];
