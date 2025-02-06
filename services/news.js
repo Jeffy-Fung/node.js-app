@@ -9,8 +9,6 @@ exports.fetchLatestNews = async () => {
     const data = await response.json();
     if (data.status !== "ok") throw new Error("Failed to fetch news");
 
-    console.log(data.articles);
-
     return data.articles.filter(
       (article) => article.source.id === "cnn" || article.source.name === "CNBC"
     );
@@ -19,5 +17,4 @@ exports.fetchLatestNews = async () => {
     console.log("Error during fetch:", error);
     throw error;
   }
-
 };

@@ -8,5 +8,6 @@ APIRouter.use("/users", require("./users/index"));
 APIRouter.use("/login", require("./login/index"));
 APIRouter.use("/chat-sessions", require("./chat-sessions/index"));
 APIRouter.use("/chats", require("./chats/index"));
+APIRouter.use("/news", require("./news/index"));
 
 module.exports = APIRouter;

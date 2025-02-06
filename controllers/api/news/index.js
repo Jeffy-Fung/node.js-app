@@ -1,25 +1,45 @@
 const { crawlNews } = require("@root/services/ai-app");
 const { fetchLatestNews } = require("@root/services/news");
-const { News } = require("@root/models/News");
+const News = require("@root/models/News");
 
 exports.crawl_latest = async (req, res) => {
   const latest_news = await fetchLatestNews();
-
   const news_content = await crawlNews(latest_news.map((news) => news.url));
 
   const news_with_content = latest_news.map((news) => ({
     title: news.title,
     description: news.description,
     url: news.url,
-    content: news_content.filter((item) => item.url === news.url).content,
-    source: news.source,
+    content: news_content.filter((item) => item.url === news.url)[0].content,
+    source: news.source.name,
     publishedAt: news.publishedAt,
   }));
 
-  news_with_content.forEach(async (news) => {
-    await News.createIfNotExists(news);
-  });
+  try {
+    news_with_content.forEach(async (news) => {
+      await createNewsIfNotExists(news);
+    });
+    return res.status(201).json({ data: news_with_content });
 
-  return res.status(201).json({ text: news_with_content });
+  } catch (error) {
+    return res.status(422).json({ error: error.message });
+  }
+};
 
+const createNewsIfNotExists = async (data) => {
+  try {
+    const existingDocument = await News.findOne({ url: data.url });
+
+    if (!existingDocument) {
+      const newDocument = new News(data);
+      const savedDocument = await newDocument.save();
+      return savedDocument;
+    } else {
+      console.log(`Document with URL ${data.url} already exists.`);
+      return existingDocument;
+    }
+  } catch (error) {
+    console.error('Error inserting document:', error);
+    throw error;
+  }
 };

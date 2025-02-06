@@ -23,7 +23,7 @@ exports.crawlNews = async (news_urls) => {
   const urlParams = news_urls.map(url => `urls=${url}`).join('&');
 
   try {
-    const response = await fetch(`${process.env.AI_APP_URL}/news-deails?${urlParams}`, {
+    const response = await fetch(`${process.env.AI_APP_URL}/news-details?${urlParams}`, {
       method: "GET",
     });
 
