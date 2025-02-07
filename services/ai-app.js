@@ -42,3 +42,25 @@ exports.crawlNews = async (news_urls) => {
     throw error;
   }
 };
+
+exports.embedNews = async (news_articles) => {
+  const payload = {
+    articles: news_articles.map((article) => ({
+      title: article.title,
+      content: article.content,
+      id: article.id,
+      url: article.url,
+    })),
+  };
+
+  const response = await fetch(`${process.env.AI_APP_URL}/embed-news`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
