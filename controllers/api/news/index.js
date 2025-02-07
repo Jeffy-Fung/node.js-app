@@ -1,4 +1,4 @@
-const { crawlNews } = require("@root/services/ai-app");
+const { crawlNews, embedNews } = require("@root/services/ai-app");
 const { fetchLatestNews } = require("@root/services/news");
 const News = require("@root/models/News");
 
@@ -33,6 +33,7 @@ const createNewsIfNotExists = async (data) => {
     if (!existingDocument) {
       const newDocument = new News(data);
       const savedDocument = await newDocument.save();
+      const embeddings = await embedNews([savedDocument]);
       return savedDocument;
     } else {
       console.log(`Document with URL ${data.url} already exists.`);
