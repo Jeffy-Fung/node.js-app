@@ -61,11 +61,15 @@ exports.createRagChat = async (req, res) => {
 
   const aiMessage = ragChatResponse.output.content;
 
+  const referenceUrls = [...new Set(ragChatResponse.documents.map((document) => document.metadata.url))];
+
+  const finalAiMessage = `${aiMessage}\n\nReferences:\n ${referenceUrls.join("\n")}`;
+
   await ChatHistory.create({
     session: sessionId,
     role: "ai",
-    message: aiMessage,
+    message: finalAiMessage,
   });
 
-  return res.status(201).json({ text: aiMessage });
+  return res.status(201).json({ text: finalAiMessage });
 };
