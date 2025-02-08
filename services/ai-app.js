@@ -64,3 +64,26 @@ exports.embedNews = async (news_articles) => {
   return data;
 };
 
+exports.ragChat = async (message_histories, filtered_document_ids, user_input) => {
+  try {
+    const response = await fetch(`${process.env.AI_APP_URL}/rag-chat`, {
+      method: "POST",
+      body: JSON.stringify({
+        message_histories: message_histories,
+        filtered_document_ids: filtered_document_ids,
+        raw_input: user_input,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+    });
+    const data = await response.json();
+    console.log(data);
+    return data.content;
+  } catch (error) {
+    console.log("Error during fetch:", error);
+    throw error;
+  }
+};
+
