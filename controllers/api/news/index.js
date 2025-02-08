@@ -26,6 +26,22 @@ exports.crawl_latest = async (req, res) => {
   }
 };
 
+exports.getTrendingNews = async (req, res) => {
+  const recentNews = await News.find({
+    publishedAt: { $gte: new Date(Date.now() - 1000 * 60 * 60 * 72) },
+  });
+  return res.status(200).json({
+    data: recentNews.map((news) => ({
+      id: news._id,
+      title: news.title,
+      description: news.description,
+      url: news.url,
+      source: news.source,
+      publishedAt: news.publishedAt,
+    })),
+  });
+};
+
 const createNewsIfNotExists = async (data) => {
   try {
     const existingDocument = await News.findOne({ url: data.url });
