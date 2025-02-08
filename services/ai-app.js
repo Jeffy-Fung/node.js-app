@@ -79,8 +79,8 @@ exports.ragChat = async (message_histories, filtered_document_ids, user_input) =
 
     });
     const data = await response.json();
-    console.log(data);
-    return data.content;
+    return data;
+
   } catch (error) {
     console.log("Error during fetch:", error);
     throw error;

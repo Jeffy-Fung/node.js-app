@@ -57,7 +57,9 @@ exports.createRagChat = async (req, res) => {
 
   const filtered_document_ids = recentNews.map((news) => news._id);
 
-  const aiMessage = await ragChat(serializedMessages, filtered_document_ids, inputUserMessage);
+  const ragChatResponse = await ragChat(serializedMessages, filtered_document_ids, inputUserMessage);
+
+  const aiMessage = ragChatResponse.output.content;
 
   await ChatHistory.create({
     session: sessionId,
