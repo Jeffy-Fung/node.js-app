@@ -28,7 +28,7 @@ exports.crawl_latest = async (req, res) => {
 
 exports.getTrendingNews = async (req, res) => {
   const recentNews = await News.find({
-    publishedAt: { $gte: new Date(Date.now() - 1000 * 60 * 60 * 72) },
+    publishedAt: { $gte: new Date(Date.now() - 1000 * 60 * 60 * 48) },
   });
   return res.status(200).json({
     data: recentNews.map((news) => ({
