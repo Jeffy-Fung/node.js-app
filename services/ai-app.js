@@ -65,6 +65,7 @@ exports.embedNews = async (news_articles) => {
 };
 
 exports.ragChat = async (message_histories, filtered_document_ids, user_input) => {
+  console.log("filtered_document_ids", filtered_document_ids);
   try {
     const response = await fetch(`${process.env.AI_APP_URL}/rag-chat`, {
       method: "POST",
