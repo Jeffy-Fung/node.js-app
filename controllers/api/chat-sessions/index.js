@@ -19,6 +19,12 @@ exports.getChatSessions = async (req, res) => {
 exports.createSimpleChatSession = async (req, res) => {
   const user = req.user;
   const chatSession = await ChatSession.create({ user: user._id, type: "simple" });
+  await ChatHistory.create({
+    session: chatSession._id,
+    role: "system",
+    message: "You are a helpful assistant. You are going to talk to user about any question.",
+  });
+
   return res.status(201).json({
     data: {
       id: chatSession._id,
@@ -32,6 +38,12 @@ exports.createSimpleChatSession = async (req, res) => {
 exports.createRagChatSession = async (req, res) => {
   const user = req.user;
   const chatSession = await ChatSession.create({ user: user._id, type: "rag" });
+  await ChatHistory.create({
+    session: chatSession._id,
+    role: "system",
+    message: "You are a helpful assistant. You are going to help the user to digest trending news and answer any question about the news.",
+  });
+
   return res.status(201).json({
     data: {
       id: chatSession._id,
