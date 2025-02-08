@@ -3,7 +3,9 @@ const ChatHistory = require("@models/ChatHistory");
 
 exports.getChatSessions = async (req, res) => {
   const user = req.user;
-  const chatSessions = await ChatSession.find({ user: user._id });
+  const type = req.query.type;
+  const chatSessions = await ChatSession.find({ user: user._id, type: type });
+
   return res.status(200).json({
     data: chatSessions.map((chatSession) => ({
       id: chatSession._id,
@@ -14,9 +16,22 @@ exports.getChatSessions = async (req, res) => {
   });
 };
 
-exports.createChatSession = async (req, res) => {
+exports.createSimpleChatSession = async (req, res) => {
   const user = req.user;
-  const chatSession = await ChatSession.create({ user: user._id });
+  const chatSession = await ChatSession.create({ user: user._id, type: "simple" });
+  return res.status(201).json({
+    data: {
+      id: chatSession._id,
+      userId: user._id,
+      createdAt: chatSession.createdAt,
+      updatedAt: chatSession.updatedAt,
+    },
+  });
+};
+
+exports.createRagChatSession = async (req, res) => {
+  const user = req.user;
+  const chatSession = await ChatSession.create({ user: user._id, type: "rag" });
   return res.status(201).json({
     data: {
       id: chatSession._id,
