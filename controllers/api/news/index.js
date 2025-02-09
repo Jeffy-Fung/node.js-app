@@ -2,24 +2,24 @@ const { crawlNews, embedNews } = require("@root/services/ai-app");
 const { fetchLatestNews } = require("@root/services/news");
 const News = require("@root/models/News");
 
-exports.crawl_latest = async (req, res) => {
-  const latest_news = await fetchLatestNews();
-  const news_content = await crawlNews(latest_news.map((news) => news.url));
+exports.crawlLatest = async (req, res) => {
+  const latestNews = await fetchLatestNews();
+  const newsContent = await crawlNews(latestNews.map((news) => news.url));
 
-  const news_with_content = latest_news.map((news) => ({
+  const newsWithContent = latestNews.map((news) => ({
     title: news.title,
     description: news.description,
     url: news.url,
-    content: news_content.filter((item) => item.url === news.url)[0].content,
+    content: newsContent.filter((item) => item.url === news.url)[0].content,
     source: news.source.name,
     publishedAt: news.publishedAt,
   }));
 
   try {
-    news_with_content.forEach(async (news) => {
+    newsWithContent.forEach(async (news) => {
       await createNewsIfNotExists(news);
     });
-    return res.status(201).json({ data: news_with_content });
+    return res.status(201).json({ data: newsWithContent });
 
   } catch (error) {
     return res.status(422).json({ error: error.message });
