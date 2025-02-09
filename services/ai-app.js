@@ -8,11 +8,13 @@ exports.simpleChat = async (messages) => {
       body: JSON.stringify({ messages: messages }),
       headers: {
         "Content-Type": "application/json",
+        "api-key": process.env.AI_APP_API_KEY,
       },
     });
     const data = await response.json();
     console.log(data);
     return data.content;
+
   } catch (error) {
     console.log("Error during fetch:", error);
     throw error;
@@ -25,7 +27,11 @@ exports.crawlNews = async (news_urls) => {
   try {
     const response = await fetch(`${process.env.AI_APP_URL}/news-details?${urlParams}`, {
       method: "GET",
+      headers: {
+        "api-key": process.env.AI_APP_API_KEY,
+      },
     });
+
 
     const data = await response.json();
     return data.map((news) => {
@@ -58,6 +64,7 @@ exports.embedNews = async (news_articles) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      "api-key": process.env.AI_APP_API_KEY,
     },
   });
   const data = await response.json();
@@ -75,6 +82,7 @@ exports.ragChat = async (message_histories, filtered_document_ids, user_input) =
       }),
       headers: {
         "Content-Type": "application/json",
+        "api-key": process.env.AI_APP_API_KEY,
       },
 
     });
