@@ -8,7 +8,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 // For JWT Strategy
 const passportJWT = require("passport-jwt");
-const { createAccountFromGoogle } = require("@modules/createUser");
+const { createAccountFromGoogle } = require("../modules/createUser");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 

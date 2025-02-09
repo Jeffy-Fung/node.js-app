@@ -8,14 +8,6 @@
     "devDebugStart": "nodemon --inspect app.js",
     "dev": "nodemon app.js"
   },
-  "_moduleAliases": {
-    "@root": ".",
-    "@models": "./models",
-    "@routes": "./routes",
-    "@controllers": "./controllers",
-    "@modules": "./modules",
-    "@services": "./services"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",

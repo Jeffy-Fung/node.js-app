@@ -1,7 +1,7 @@
 const {
   createChat,
   createRagChat,
-} = require("@controllers/api/chats");
+} = require("../../../controllers/api/chats");
 
 const ChatRouter = require("express").Router();
 

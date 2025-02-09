@@ -3,8 +3,9 @@ const {
   getChatHistories,
   createSimpleChatSession,
   createRagChatSession,
-} = require("@controllers/api/chat-sessions");
-const { authentication } = require("@root/authentication");
+} = require("../../../controllers/api/chat-sessions");
+const { authentication } = require("../../../authentication");
+
 
 
 const ChatSessionRouter = require("express").Router();

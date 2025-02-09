@@ -1,5 +1,5 @@
-const ChatSession = require("@models/ChatSession");
-const ChatHistory = require("@models/ChatHistory");
+const ChatSession = require("../../../models/ChatSession");
+const ChatHistory = require("../../../models/ChatHistory");
 
 exports.getChatSessions = async (req, res) => {
   const user = req.user;

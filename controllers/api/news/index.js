@@ -1,6 +1,6 @@
-const { crawlNews, embedNews } = require("@root/services/ai-app");
-const { fetchLatestNews } = require("@root/services/news");
-const News = require("@root/models/News");
+const { crawlNews, embedNews } = require("../../../services/ai-app");
+const { fetchLatestNews } = require("../../../services/news");
+const News = require("../../../models/News");
 
 exports.crawlLatest = async (req, res) => {
   const latestNews = await fetchLatestNews();

@@ -1,5 +1,5 @@
-const { authentication } = require("@root/authentication");
-const { crawlLatest, getTrendingNews } = require("@root/controllers/api/news");
+const { authentication } = require("../../../authentication");
+const { crawlLatest, getTrendingNews } = require("../../../controllers/api/news");
 
 const NewsRouter = require("express").Router();
 

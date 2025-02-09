@@ -1,5 +1,5 @@
-const { simpleChat, ragChat } = require("@services/ai-app");
-const ChatHistory = require("@models/ChatHistory");
+const { simpleChat, ragChat } = require("../../../services/ai-app");
+const ChatHistory = require("../../../models/ChatHistory");
 
 exports.createChat = async (req, res) => {
   const { messages, sessionId } = req.body;

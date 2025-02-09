@@ -4,8 +4,8 @@ const {
   getUser,
   createUser,
   createUserValidationSchema,
-} = require("@controllers/users");
-const { authentication } = require("@root/authentication");
+} = require("../../../controllers/users");
+const { authentication } = require("../../../authentication");
 
 const UserRouter = require("express").Router();
 
