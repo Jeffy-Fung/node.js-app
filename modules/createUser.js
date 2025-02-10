@@ -3,12 +3,14 @@ const User = require("../models/User");
 // TODO: create user from post user endpoint
 
 exports.createAccountFromGoogle = async ({ username, email, googleId }) => {
-  await User.create({
+  const user = await User.create({
     username: username,
     password: generateRandomPassword(username),
     email: email,
     googleId: googleId,
   });
+
+  return user;
 };
 
 function generateRandomPassword(username) {
