@@ -19,4 +19,4 @@ exports.fetchLatestNews = async () => {
   }
 };
 
-const crawlableSourceNames = ["CNBC", "CNN", "Interview", "BBC News"];
+const crawlableSourceNames = ["CNBC", "CNN", "Interview", "BBC News", "The Washington Post", "Unilad.com", "Fox News"];
