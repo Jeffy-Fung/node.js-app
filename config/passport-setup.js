@@ -63,5 +63,6 @@ passport.use(
 
 function getUsernameFromGoogleDisplayname(displayname) {
   const username = displayname.trim().split(" ").join("_").toLowerCase();
-  return username;
+  const randomString = Math.random().toString(36).substring(2, 8);
+  return `${username}_${randomString}`
 }
