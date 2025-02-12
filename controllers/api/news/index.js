@@ -30,10 +30,9 @@ exports.crawlLatest = async (req, res) => {
       })));
     }
 
-  try {
-    newsWithContent.forEach(async (news) => {
+    await Promise.all(newsWithContent.map(async (news) => {
       await createNewsIfNotExists(news);
-    });
+    }));
     return res.status(201).json({ data: newsWithContent });
 
   } catch (error) {
