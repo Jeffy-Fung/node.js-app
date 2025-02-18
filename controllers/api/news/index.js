@@ -4,32 +4,18 @@ const News = require("../../../models/News");
 
 exports.crawlLatest = async (req, res) => {
   const latestNews = await fetchLatestNews();
+  const newsContent = await crawlNews(latestNews.map((news) => news.url));
 
-  const newsBySource = latestNews.reduce((acc, news) => {
-    if (!acc[news.source.name]) {
-      acc[news.source.name] = [];
-    }
-    acc[news.source.name].push(news.url);
-    return acc;
-  }, {});
-
-  const newsWithContent = [];
+  const newsWithContent = latestNews.map((news) => ({
+    title: news.title,
+    description: news.description,
+    url: news.url,
+    content: newsContent.filter((item) => item.url === news.url)[0].content,
+    source: news.source.name,
+    publishedAt: news.publishedAt,
+  }));
 
   try {
-    for (const source in newsBySource) {
-      const newsUrls = newsBySource[source];
-      const newsContent = await crawlNews(newsUrls);
-
-      newsWithContent.push(...newsUrls.map((url) => ({
-        title: latestNews.find(news => news.url === url).title,
-        description: latestNews.find(news => news.url === url).description,
-        url: url,
-        content: newsContent.find(item => item.url === url).content,
-        source: source,
-        publishedAt: latestNews.find(news => news.url === url).publishedAt,
-      })));
-    }
-
     await Promise.all(newsWithContent.map(async (news) => {
       await createNewsIfNotExists(news);
     }));
