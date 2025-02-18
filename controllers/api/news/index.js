@@ -4,9 +4,15 @@ const News = require("../../../models/News");
 
 exports.crawlLatest = async (req, res) => {
   const latestNews = await fetchLatestNews();
-  const newsContent = await crawlNews(latestNews.map((news) => news.url));
 
-  const newsWithContent = latestNews.map((news) => ({
+  const existingNews = await News.find({});
+
+  const nonExistingNews = latestNews.filter((news) => !existingNews.some((existingNews) => existingNews.url === news.url));
+  const top3NonExistingNews = nonExistingNews.slice(0, 3);
+
+  const newsContent = await crawlNews(top3NonExistingNews.map((news) => news.url));
+
+  const newsWithContent = top3NonExistingNews.map((news) => ({
     title: news.title,
     description: news.description,
     url: news.url,
