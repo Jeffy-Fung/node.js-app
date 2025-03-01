@@ -4,6 +4,7 @@ const News = require("../../../models/News");
 
 exports.crawlLatest = async (req, res) => {
   const latestNews = await fetchLatestNews();
+  console.log("number of news fetched:", latestNews.length);
 
   const existingNews = await News.find({});
 
@@ -11,6 +12,7 @@ exports.crawlLatest = async (req, res) => {
   const top3NonExistingNews = nonExistingNews.slice(0, 3);
 
   const newsContent = await crawlNews(top3NonExistingNews.map((news) => news.url));
+  console.log("number of news content fetched:", newsContent.length);
 
   const newsWithContent = top3NonExistingNews.map((news) => ({
     title: news.title,

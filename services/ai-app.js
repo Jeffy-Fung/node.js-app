@@ -23,6 +23,7 @@ exports.simpleChat = async (messages) => {
 
 exports.crawlNews = async (news_urls) => {
   const urlParams = news_urls.map(url => `urls=${url}`).join('&');
+  console.log(`posting to: ${process.env.AI_APP_URL}/news-details?${urlParams}`);
 
   try {
     const response = await fetch(`${process.env.AI_APP_URL}/news-details?${urlParams}`, {
