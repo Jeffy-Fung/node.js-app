@@ -4,6 +4,7 @@ const News = require("../../../models/News");
 
 exports.crawlLatest = async (req, res) => {
   // improve endpoint performance as it crawls and embed news at the same endpoint
+  // possibly turn it into a cron job
 
   const latestNews = await fetchLatestNews();
   console.log("number of news fetched:", latestNews.length);
