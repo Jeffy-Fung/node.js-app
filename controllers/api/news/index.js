@@ -12,6 +12,7 @@ exports.crawlLatest = async (req, res) => {
 
   const nonExistingNews = latestNews.filter((news) => !existingNews.some((existingNews) => existingNews.url === news.url));
   const top3NonExistingNews = nonExistingNews.slice(0, 3);
+  console.log("number of non existing news:", top3NonExistingNews.length);
 
   if (top3NonExistingNews.length === 0) {
     return res.status(201).json({ data: {} })
