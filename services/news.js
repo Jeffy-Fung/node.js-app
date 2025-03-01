@@ -9,6 +9,8 @@ exports.fetchLatestNews = async () => {
     const data = await response.json();
     if (data.status !== "ok") throw new Error("Failed to fetch news");
 
+    console.log("number of news fetched from raw news api:", data.totalResults);
+
     return data.articles.filter(
       (article) => crawlableSourceNames.includes(article.source.name)
     );
