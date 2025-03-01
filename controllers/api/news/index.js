@@ -3,6 +3,8 @@ const { fetchLatestNews } = require("../../../services/news");
 const News = require("../../../models/News");
 
 exports.crawlLatest = async (req, res) => {
+  // improve endpoint performance as it crawls and embed news at the same endpoint
+
   const latestNews = await fetchLatestNews();
   console.log("number of news fetched:", latestNews.length);
 
@@ -10,6 +12,10 @@ exports.crawlLatest = async (req, res) => {
 
   const nonExistingNews = latestNews.filter((news) => !existingNews.some((existingNews) => existingNews.url === news.url));
   const top3NonExistingNews = nonExistingNews.slice(0, 3);
+
+  if (top3NonExistingNews.length === 0) {
+    return res.status(201).json({ data: {} })
+  }
 
   const newsContent = await crawlNews(top3NonExistingNews.map((news) => news.url));
   console.log("number of news content fetched:", newsContent.length);
